@@ -7,13 +7,11 @@ Social Media App is a web application that allows users to connect and share con
 ## Features
 
 - User registration and authentication
-- Realtime chat with your friends using socket.io
 - News feed to view and interact with posts from friends and followed users
 - Create and publish posts with text and images
-- Like and comment on posts
+- Like and can watch comments
 - User profile pages with customizable information and profile picture
 - Follow and unfollow other users
-- Update your cover picture to personalize your profile.
 - Add your LinkedIn and Twitter handle links to your profile for better networking.
 
 ## Technologies Used
