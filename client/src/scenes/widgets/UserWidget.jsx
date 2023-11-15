@@ -40,4 +40,57 @@ import { BASE_URL } from "utils/baseUrl";
         const data = await response.json();
         setUser(data);
     };
+
+    useEffect(() => {
+      getUser();
+    }, []) //eslint-disable-line react-hooks/exaustive-deps
+
+    if(!user){
+      return null;
+    }
+
+    const {
+      firstName,
+      lastName,
+      location,
+      occupation,
+      viewedProfile,
+      impressions,
+      friends,
+
+    } = user;
+
+    return (
+      //This is about the left widget under sections of profile first row and second row for example location, dp, social media handles
+      <WidgetWrapper>
+      {/* FIRST ROW */}
+        <FlexBetween 
+          gap="0.5rem"
+          pb="1.1rem"
+          onClick={() => navigate(`/profile/${userId}`)}
+        >
+          <FlexBetween gap="1rem">
+            <UserImage image={picturePath} />
+            <Box>
+              <Typography 
+                variant="h4"
+                color={dark}
+                fontWeight="500"
+                sx= {{
+                  "&:hover": palette.primary.light,
+                  cursor:"pointer"
+                }} >
+                  {firstName} {lastName}
+                </Typography>
+                <Typography color={medium}>{friends.length} friends</Typography>
+            </Box>
+
+            <ManageAccountsOutlined />
+
+          </FlexBetween>
+
+        </FlexBetween>
+
+      </WidgetWrapper>
+    )
   };
