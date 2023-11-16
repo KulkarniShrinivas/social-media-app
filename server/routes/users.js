@@ -1,4 +1,6 @@
 import express from "express";
+
+
 import {
   getUser,
   getUserFriends,
@@ -17,4 +19,4 @@ router.get("/:id/friends", verifyToken, getUserFriends);
 router.patch("/:id/:friendId", verifyToken, addRemoveFriend);
 
 
-export default router;
+export default router;  
