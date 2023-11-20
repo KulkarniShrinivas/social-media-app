@@ -94,6 +94,7 @@ const githubPictureUpload = async (req, res, next) => {
       content: fileContent.toString("base64"),
     });
 
+    
     console.log("File saved to GitHub:", response.data.content.html_url);
 
     // Send a successful response
