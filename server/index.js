@@ -8,6 +8,8 @@ import helmet from "helmet";
 import morgan from "morgan";
 import path, { format } from "path";
 import { fileURLToPath } from "url";
+// Import the Octokit class from the @octokit/rest library
+import { Octokit } from "@octokit/rest";
 
 //routes
 import authRoutes from "./routes/auth.js";
@@ -27,113 +29,52 @@ import Post from "./models/Post.js";
 import { users, posts} from "./data/index.js";
 
 
-//---------------------------------------//
-/********** CONFIGURATIONS ***************/
-//---------------------------------------//
-
-// Get the file system path of the current module's file
+/* CONFIGURATIONS */
 const __filename = fileURLToPath(import.meta.url);
-
-// Get the directory name of the current module's file
-export const __dirname = path.dirname(__filename);
-
-// Load environment variables from a .env file
+const __dirname = path.dirname(__filename);
 dotenv.config();
-
 const app = express();
-
-// Parse incoming JSON request bodies
 app.use(express.json());
-
-// Enable security headers using the Helmet middleware
 app.use(helmet());
-
-// Set cross-origin resource policy to "cross-origin" using the Helmet middleware
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
-
 app.use(morgan("common"));
-
-// Parse incoming JSON request bodies with a limit of 30MB and extended option set to true
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
-
-// Enable Cross-Origin Resource Sharing (CORS)
+app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
 app.use(cors());
+app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
-// Serve static assets from the "public/assets" directory
-app.use("/assets", express.static(path.join(__dirname, 'public/assets')));
-
-
-//---------------------------------------//
-/*********** FILE STORAGE *************/
-//---------------------------------------//
-
-const storage = multer.memoryStorage();
-
-const upload = multer({
-  storage, // Set the "storage" configuration object defined earlier as the storage option for Multer
+/* FILE STORAGE */
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "public/assets");
+  },
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
+  },
 });
+const upload = multer({ storage });
 
-// This function uploads a picture file to GitHub repository
-const githubPictureUpload = async (req, res, next) => {
-  try {
-    // Read the content of the uploaded file
-    const fileContent = req.file.buffer;
-
-    // Specify the details of the new file in your GitHub repository
-    const repoOwner = "KulkarniShrinivas";
-    const repoName = "social-media-app";
-    const targetFolder = "server/public/assets";
-    const fileName = req.file.originalname;
-
-    // Create or update the file in your GitHub repository
-    const response = await octokit.repos.createOrUpdateFileContents({
-      owner: repoOwner,
-      repo: repoName,
-      path: `${targetFolder}/${fileName}`,
-      message: "Add New Picture",
-      content: fileContent.toString("base64"),
-    });
-
-    
-    console.log("File saved to GitHub:", response.data.content.html_url);
-
-    // Send a successful response
-    next();
-  } catch (err) {
-    // Handle errors during file upload
-    console.error("Error uploading file:", err);
-    res
-      .status(500)
-      .json({ error: err.message, msg: "Error uploading file to GitHub" });
-  }
-};
-//Routes with Files
-
-app.post("/auth/register/", upload.single("picture"), register);
+/* ROUTES WITH FILES */
+app.post("/auth/register", upload.single("picture"), register);
 app.post("/posts", verifyToken, upload.single("picture"), createPost);
 
-
-//Routes
+/* ROUTES */
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 
-//setting up mongoose
-
+/* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;
-mongoose.connect(process.env.MONGO_URL, {
-    // useNewUrlParser: true,
-    // useUnifiedTopology: true,
-}).then(() => {
-    app.listen(PORT, () => console.log(`Server port: ${PORT}`)); 
+mongoose
+  .connect(process.env.MONGO_URL)
+  .then(() => {
+    app.listen(PORT, () => console.log(`Server Port: ${PORT}`));
 
-
-    /* Add Data One Time */
+    /* ADD DATA ONE TIME */
     // User.insertMany(users);
     // Post.insertMany(posts);
-})
-
-.catch((error) => console.log(`${error} did not connect`));
+  })
+  .catch((error) => console.log(`${error} did not connect`));
 
 
 
