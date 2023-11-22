@@ -5,6 +5,7 @@ import state from "../../state";
 import UserWidget from "../../scenes/widgets/UserWidget";
 import MyPostWidget from "../../scenes/widgets/MyPostWidget";
 import PostsWidget from "../../scenes/widgets/PostsWidget";
+import AdvertWidget from "../../scenes/widgets/AdvertWidget";
 // import PostWidget from "../../scenes/widgets/PostWidget";
 
 
@@ -36,7 +37,10 @@ const HomePage = () => {
             </Box>
 
             {isNonMobileScreens && (
-                <Box flexBasis="26%"></Box>
+                <Box flexBasis="26%">
+                    <AdvertWidget />
+                    <Box m="2rem 0" />
+                </Box>
             )}
 
         </Box>
