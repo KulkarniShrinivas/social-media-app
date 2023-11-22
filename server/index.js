@@ -8,8 +8,7 @@ import helmet from "helmet";
 import morgan from "morgan";
 import path, { format } from "path";
 import { fileURLToPath } from "url";
-// Import the Octokit class from the @octokit/rest library
-import { Octokit } from "@octokit/rest";
+
 
 //routes
 import authRoutes from "./routes/auth.js";
