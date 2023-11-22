@@ -14,31 +14,29 @@ import { Chat, ChatBubbleOutline,
      import { BASE_URL } from "../../utils/baseUrl";
 
   
-const PostWidget = ({
-    postId,
-    postUserId,
-    name,
-    description,
-    location,
-    picturePath,
-    userPicturePath,
-    likes,
-    comments,
-  }) => {
+     const PostWidget = ({
+        postId,
+        postUserId,
+        name,
+        description,
+        location,
+        picturePath,
+        userPicturePath,
+        likes,
+        comments,
+      }) => {
     //this determines we have opened comments list or not will keep this false
-    const [isComments, setIsComments] = useState(false);
-    const dispatch = useDispatch();
-    const token = useSelector((state) => state.token);
-    const loggedInUserId = useSelector((state) => state.user._id);
-    const isLiked = Boolean(likes[loggedInUserId]);
-    const likeCount = Object.keys(likes).length;
+  const [isComments, setIsComments] = useState(false);
+  const dispatch = useDispatch();
+  const token = useSelector((state) => state.token);
+  const loggedInUserId = useSelector((state) => state.user._id);
+  const isLiked = Boolean(likes[loggedInUserId]);
+  const likeCount = Object.keys(likes).length;
 
     //colors
     const { palette } = useTheme();
-    // const primaryLight = palette.primary.light;
-    // const primaryDark = palette.primary.dark;
     const main = palette.neutral.main;
-    const primary = palette.neutral.main;
+    const primary = palette.primary.main;
 
     //count number of likes
     const patchLike = async () => {
