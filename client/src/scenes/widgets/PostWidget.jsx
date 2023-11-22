@@ -106,10 +106,27 @@ const PostWidget = ({
                     </FlexBetween>
                 </FlexBetween>
 
-                
-            </FlexBetween>
-        </WidgetWrapper>
-    )
-  }
+                <IconButton>
+                    <ShareOutlined />
+                </IconButton>  
 
-  export default PostWidget;
+                {/* Displaying the acutal comments*/ }  
+                </FlexBetween>
+                {isComments && (
+                    <Box mt="0.5rem">
+                    {comments.map((comment, i) => (
+                        <Box key={`${name}-${i}`}>
+                        <Divider />
+                        <Typography sx={{ color: main, m: "0.5rem 0", pl: "1rem" }}>
+                            {comment}
+                        </Typography>
+                        </Box>
+                    ))}
+                    <Divider />
+                    </Box>
+                )}
+            </WidgetWrapper>
+    );
+    };
+
+export default PostWidget;
