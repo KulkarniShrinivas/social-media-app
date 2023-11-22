@@ -1,5 +1,5 @@
 //this is for like share 
-import { ChatBubbleOutline, 
+import { Chat, ChatBubbleOutline, 
     FavoriteBorderOutlined,
      FavoriteOutlined, 
      ShareOutlined } from "@mui/icons-material";
@@ -94,10 +94,19 @@ const PostWidget = ({
                         </IconButton>
                         <Typography>{likeCount}</Typography>
                     </FlexBetween>
+
+
                     <FlexBetween gap="0.3rem">
-                       
+                        {/*opening the comments and checking comments */}
+                        <IconButton onClick={() => setIsComments(!isComments) }>
+                          <ChatBubbleOutline />
+                        </IconButton>
+                        {/*determines number of comments as well */ }
+                        <Typography> {comments.length} </Typography>
                     </FlexBetween>
                 </FlexBetween>
+
+                
             </FlexBetween>
         </WidgetWrapper>
     )
