@@ -11,12 +11,9 @@ import { Chat, ChatBubbleOutline,
      import { useState } from "react";
      import { useDispatch, useSelector } from "react-redux";
      import { setPost } from "../../state";
+     import { BASE_URL } from "../../utils/baseUrl";
 
-    likes = {
-        "userid1": true,
-        "userid2": true
-    }
-
+  
 const PostWidget = ({
     postId,
     postUserId,
@@ -29,13 +26,12 @@ const PostWidget = ({
     comments,
   }) => {
     //this determines we have opened comments list or not will keep this false
-    const {isComments, setIsComments} = useState(false);
+    const [isComments, setIsComments] = useState(false);
     const dispatch = useDispatch();
     const token = useSelector((state) => state.token);
     const loggedInUserId = useSelector((state) => state.user._id);
     const isLiked = Boolean(likes[loggedInUserId]);
     const likeCount = Object.keys(likes).length;
-
 
     //colors
     const { palette } = useTheme();

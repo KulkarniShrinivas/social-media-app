@@ -5,13 +5,16 @@ import state, { setFriends } from "../state";
 import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
 import { useNavigate } from "react-router-dom";
+import { BASE_URL } from "../utils/baseUrl";
+import React from 'react';
+
 
 
 const Friend = ({ friendId, name, subtitle, userPicturePath }) => {
  
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const {_id } = useSelector((state) => state.use);
+    const {_id } = useSelector((state) => state.user);
     const token = useSelector((state) => state.token);
     //grab friends from useSelector
     const friends = useSelector((state) => state.user.friends);
