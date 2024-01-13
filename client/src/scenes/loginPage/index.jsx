@@ -25,7 +25,7 @@ const LoginPage = () => {
         backgroundColor={theme.palette.background.alt}
       >
         <Typography fontWeight="500" variant="h5" sx={{ mb: "1.5rem" }}>
-          Welcome to SocialConnect, the Social Media for friendships!
+          Welcome to SocialConnect, The Social Media for friends!
         </Typography>
         <Form />
       </Box>
