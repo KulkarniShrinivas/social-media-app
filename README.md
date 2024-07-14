@@ -19,6 +19,4 @@ Social Media App is a web application that allows users to connect and share con
 - **Backend**: Node.js, Express.js, mongoose, helmet, bcrypt, jsonWebToken, multer, morgan
 - **Database**: MongoDB Altas
 
-## License
 
-This project is licensed under the MIT License.
